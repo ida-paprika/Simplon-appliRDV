@@ -32,8 +32,8 @@ public abstract class Personne {
 	}
 	
 	public void afficher() {
-		System.out.println(this.getNom().toUpperCase() +" "+ this.getPrenom());
-		System.out.println("Téléphone : "+ this.getNumeroDeTelephone());
+		System.out.println(this.nom.toUpperCase() +" "+ this.prenom);
+		System.out.println("Téléphone : "+ this.numeroDeTelephone);
 	}
 
 	

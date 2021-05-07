@@ -2,16 +2,16 @@ package fr.simplon.medecine.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class Patient extends Personne {
 
-	public enum Sexe {F, M};
-	private Sexe sexe;
+	private char sexe;
 	private long numeroDeSecuriteSociale;
 	private LocalDate dateDeNaissance;
 	private String commentaires;
 	
-	public Patient(String nom, String prenom, String telephone, Sexe sexe, long numeroDeSecuriteSociale,
+	public Patient(String nom, String prenom, String telephone, char sexe, long numeroDeSecuriteSociale,
 			LocalDate dateDeNaissance, String commentaires) {
 		super(nom, prenom, telephone);
 		this.sexe = sexe;
@@ -20,11 +20,11 @@ public class Patient extends Personne {
 		this.commentaires = commentaires;
 	}
 
-	public Sexe getSexe() {
+	public char getSexe() {
 		return sexe;
 	}
 
-	public void setSexe(Sexe sexe) {
+	public void setSexe(char sexe) {
 		this.sexe = sexe;
 	}
 
@@ -55,18 +55,27 @@ public class Patient extends Personne {
 	@Override
 	public void afficher() {
 		super.afficher();
-		if (this.sexe == Sexe.F) {
-			System.out.println("Sexe : Féminin");
-		} else {
-			System.out.println("Sexe : Masculin");
-		}
+		System.out.println("Sexe : " + (this.sexe == 'F' ? "Féminin" : "Masculin"));
 		System.out.println("Numéro de Sécurité Sociale : "+ this.numeroDeSecuriteSociale);
-		System.out.println("Date de naissance : "+ formatedDate(this.dateDeNaissance));
+//		System.out.println("Date de naissance : "+ formatedDate(this.dateDeNaissance));
+		System.out.println("Date de naissance : "+ DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(this.dateDeNaissance));
+//		System.out.println("Commentaires : "+ (this.commentaires == null ? "[aucun commentaire]" : this.commentaires) );
+		System.out.println("Commentaires : "+ checkCommentaires(this.commentaires));
 	}
 	
 	public String formatedDate(LocalDate date) {
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMMM yyyy");
 		String formatedDate = date.format(dateFormat);
 		return formatedDate;
 	}
+	
+	public String checkCommentaires(String commentaire) {
+		if (commentaire == null) {
+			return "[aucun commentaire]";
+		} else {
+			return commentaire;
+		}
+	}
+	
+	
 }
